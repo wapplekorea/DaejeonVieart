@@ -747,6 +747,8 @@ textarea.fi { resize: none; height: 100px; }
       var fd = new FormData(form);
       fd.append('project', form.dataset.project || '디에이치 비아트');
       fd.append('timestamp', new Date().toLocaleString('ko-KR'));
+      fd.append('userAgent', navigator.userAgent);
+      fd.append('pageUrl', location.href);
       fetch(EP, { method: 'POST', mode: 'no-cors', body: fd })
         .then(function () {
           form.reset();
