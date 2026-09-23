@@ -715,6 +715,25 @@ textarea.fi { resize: none; height: 100px; }
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
+  /* PHONE AUTO-FORMAT */
+  var phoneInput = document.querySelector('input[name="phone"]');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function () {
+      var v = this.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length < 4) {
+        this.value = v;
+      } else if (v.startsWith('02')) {
+        // 서울 02-XXXX-XXXX
+        if (v.length < 7) this.value = v.slice(0,2) + '-' + v.slice(2);
+        else this.value = v.slice(0,2) + '-' + v.slice(2,6) + '-' + v.slice(6);
+      } else {
+        // 010/011/016/017/018/019 - 3-4-4
+        if (v.length < 8) this.value = v.slice(0,3) + '-' + v.slice(3);
+        else this.value = v.slice(0,3) + '-' + v.slice(3,7) + '-' + v.slice(7);
+      }
+    });
+  }
+
   /* FORM */
   var form = document.querySelector('.form-rows');
   if (form) {
