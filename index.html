@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>디에이치 비아트 | THE H VIEART · 관심고객 등록</title>
+<meta name="description" content="대전 최초 디에이치 브랜드. 유성구 장대동, 지상 최고 54층, 2,744세대. 관심고객 등록으로 우선 분양정보를 받아보세요.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root {
+  --black: #080808;
+  --black-2: #0e0e0e;
+  --black-3: #141414;
+  --black-4: #1c1c1c;
+  --gold: #c8a96a;
+  --gold-lt: #dfc08a;
+  --gold-dim: rgba(200,169,106,.15);
+  --white: #f5f3ef;
+  --white-60: rgba(245,243,239,.6);
+  --white-30: rgba(245,243,239,.3);
+  --white-12: rgba(245,243,239,.12);
+  --white-06: rgba(245,243,239,.06);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+button { border: none; background: none; cursor: pointer; font: inherit; }
+
+/* ── NAV ─────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 60px;
+  transition: background .4s var(--ease), border-color .4s;
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(8,8,8,.92);
+  backdrop-filter: blur(16px);
+  border-bottom-color: var(--white-06);
+}
+.nav-logo {
+  display: flex; flex-direction: column; gap: 3px;
+}
+.nav-logo-sub {
+  font-size: 9px; letter-spacing: .32em; color: var(--gold);
+  font-weight: 500; text-transform: uppercase;
+}
+.nav-logo-name {
+  font-size: 18px; font-weight: 700; color: var(--white);
+  letter-spacing: .12em; text-transform: uppercase;
+  line-height: 1;
+}
+.nav-badge {
+  font-size: 10px; font-weight: 600; letter-spacing: .16em;
+  color: var(--black); background: var(--gold);
+  padding: 6px 18px; border-radius: 1px;
+  text-transform: uppercase;
+}
+
+/* ── HERO ─────────────────────────── */
+.hero {
+  position: relative; height: 100svh; min-height: 680px;
+  overflow: hidden; display: flex; align-items: flex-end;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, #0e0b08 0%, #0a0d14 50%, #08070a 100%);
+}
+/* Geometric accent lines */
+.hero-lines {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.hero-lines::before {
+  content: '';
+  position: absolute; top: 10%; right: 12%; width: 1px; height: 60%;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  opacity: .18;
+  animation: lineUp 2s 1s var(--ease) forwards;
+  transform: scaleY(0); transform-origin: top;
+}
+.hero-lines::after {
+  content: '';
+  position: absolute; top: 20%; right: 18%;
+  width: 280px; height: 280px;
+  border: 1px solid rgba(200,169,106,.08);
+  border-radius: 50%;
+  animation: fadeIn 2s 1.2s ease forwards; opacity: 0;
+}
+@keyframes lineUp { to { transform: scaleY(1); } }
+@keyframes fadeIn { to { opacity: 1; } }
+.hero-body {
+  position: relative; z-index: 2;
+  padding: 0 60px 13% 60px;
+  max-width: 900px;
+}
+.hero-eyebrow {
+  font-size: 10px; letter-spacing: .3em; color: var(--gold);
+  font-weight: 500; margin-bottom: 32px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 16px;
+  opacity: 0; animation: slideUp .8s .3s var(--ease) forwards;
+}
+.hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+.hero-main {
+  margin-bottom: 20px;
+  opacity: 0; animation: slideUp .9s .5s var(--ease) forwards;
+}
+.hero-en {
+  font-size: clamp(48px, 7vw, 96px); font-weight: 800;
+  letter-spacing: -.02em; line-height: .95;
+  color: var(--white);
+  display: block;
+}
+.hero-en-sub {
+  font-size: clamp(24px, 3.5vw, 44px); font-weight: 300;
+  letter-spacing: .28em; color: var(--gold-lt); margin-top: 8px;
+  display: block;
+}
+.hero-ko {
+  margin-top: 28px; font-size: 13px; color: var(--white-30);
+  letter-spacing: .16em; font-weight: 400;
+  opacity: 0; animation: slideUp .9s .7s var(--ease) forwards;
+}
+.hero-stats {
+  display: flex; gap: 0; margin-top: 52px;
+  border-top: 1px solid var(--white-12);
+  padding-top: 36px;
+  opacity: 0; animation: slideUp .9s .9s var(--ease) forwards;
+}
+.hero-stat {
+  padding-right: 40px; margin-right: 40px;
+  border-right: 1px solid var(--white-06);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num {
+  font-size: 28px; font-weight: 700; color: var(--white);
+  letter-spacing: -.01em; line-height: 1;
+}
+.hero-stat-num span { font-size: 14px; font-weight: 400; color: var(--white-30); margin-left: 2px; }
+.hero-stat-label { font-size: 10px; color: var(--white-30); letter-spacing: .12em; margin-top: 6px; font-weight: 500; }
+.hero-scroll {
+  position: absolute; bottom: 40px; right: 60px;
+  writing-mode: vertical-rl; font-size: 9px; letter-spacing: .22em;
+  color: var(--white-30); font-weight: 500;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  opacity: 0; animation: fadeIn 1.2s 1.6s ease forwards;
+}
+.hero-scroll::after {
+  content: ''; width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--white-30), transparent);
+}
+@keyframes slideUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
+
+/* ── SECTION BASE ─────────────────── */
+.sec { padding: 140px 60px; }
+.sec-inner { max-width: 1160px; margin: 0 auto; }
+.kicker {
+  font-size: 9px; letter-spacing: .3em; color: var(--gold);
+  font-weight: 600; text-transform: uppercase; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.kicker::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
+.sec-h2 {
+  font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+  line-height: 1.22; letter-spacing: -.02em;
+  word-break: keep-all;
+}
+.sec-h2 em { color: var(--gold); font-style: normal; }
+
+/* ── INTRO ─────────────────────────── */
+.intro { background: var(--black-2); }
+.intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+.intro-copy {}
+.intro-copy .sec-h2 { margin-bottom: 36px; }
+.intro-copy p { font-size: 14px; color: var(--white-60); line-height: 2.1; word-break: keep-all; }
+.intro-cards { display: flex; flex-direction: column; gap: 2px; }
+.intro-card {
+  background: var(--black-3); border: 1px solid var(--white-06);
+  padding: 28px 32px;
+  display: flex; align-items: center; gap: 24px;
+  transition: border-color .25s, background .25s;
+}
+.intro-card:hover { border-color: rgba(200,169,106,.2); background: var(--black-4); }
+.intro-card-num {
+  font-size: 11px; font-weight: 700; color: var(--gold);
+  letter-spacing: .12em; min-width: 28px;
+}
+.intro-card-body {}
+.intro-card-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.intro-card-sub { font-size: 12px; color: var(--white-30); line-height: 1.7; }
+
+/* ── OVERVIEW ──────────────────────── */
+.overview { background: var(--black); border-top: 1px solid var(--white-06); }
+.overview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.ov-item {
+  padding: 48px 40px; border-right: 1px solid var(--white-06);
+  border-top: none;
+}
+.ov-item:last-child { border-right: none; }
+.ov-label { font-size: 9px; letter-spacing: .22em; color: var(--gold); font-weight: 600; margin-bottom: 14px; text-transform: uppercase; }
+.ov-val { font-size: 22px; font-weight: 800; color: var(--white); letter-spacing: -.01em; line-height: 1.2; }
+.ov-val small { display: block; font-size: 12px; font-weight: 400; color: var(--white-30); margin-top: 4px; letter-spacing: .02em; }
+.overview-row2 {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--white-06);
+}
+.overview-row2 .ov-item { border-top: none; }
+
+/* ── FEATURES ──────────────────────── */
+.features { background: var(--black-2); }
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 72px; }
+.feat-card {
+  background: var(--black-3);
+  padding: 48px 40px;
+  border: 1px solid var(--white-06);
+  transition: border-color .3s, transform .3s var(--ease);
+}
+.feat-card:hover { border-color: rgba(200,169,106,.22); transform: translateY(-4px); }
+.feat-icon { font-size: 28px; margin-bottom: 28px; }
+.feat-title { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 14px; letter-spacing: -.01em; }
+.feat-desc { font-size: 13px; color: var(--white-30); line-height: 2; word-break: keep-all; }
+
+/* ── REGISTRATION ──────────────────── */
+.regist { background: var(--black); border-top: 1px solid var(--white-06); }
+.regist-inner { max-width: 680px; margin: 0 auto; }
+.regist-header { text-align: center; margin-bottom: 64px; }
+.regist-h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 800; letter-spacing: -.02em; margin-bottom: 16px; }
+.regist-sub { font-size: 13px; color: var(--white-30); letter-spacing: .08em; line-height: 1.8; }
+.form-rows { display: flex; flex-direction: column; gap: 12px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-row.single { grid-template-columns: 1fr; }
+.fg { display: flex; flex-direction: column; gap: 8px; }
+.fg label {
+  font-size: 9px; letter-spacing: .2em; color: var(--gold);
+  font-weight: 600; text-transform: uppercase;
+}
+.fi {
+  width: 100%; background: var(--white-06);
+  border: 1px solid var(--white-12); border-radius: 1px;
+  padding: 15px 18px; color: var(--white);
+  font: inherit; font-size: 14px; outline: none;
+  transition: border-color .2s, background .2s;
+  appearance: none;
+}
+.fi::placeholder { color: var(--white-30); }
+.fi:focus { border-color: var(--gold); background: var(--white-06); }
+.fi option { background: #0e0e0e; color: var(--white); }
+textarea.fi { resize: none; height: 100px; }
+.form-submit {
+  width: 100%; margin-top: 8px;
+  background: var(--gold); color: var(--black);
+  padding: 18px; border-radius: 1px;
+  font-size: 14px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase;
+  transition: background .25s, transform .2s;
+}
+.form-submit:hover { background: var(--gold-lt); transform: translateY(-2px); }
+.form-status { text-align: center; font-size: 13px; color: var(--gold); min-height: 20px; margin-top: 12px; }
+.form-legal { text-align: center; font-size: 11px; color: var(--white-30); line-height: 1.8; margin-top: 8px; }
+.hp { display: none; }
+
+/* ── FOOTER ─────────────────────────── */
+.footer { background: var(--black-2); border-top: 1px solid var(--white-06); padding: 56px 60px 44px; }
+.footer-inner { max-width: 1160px; margin: 0 auto; }
+.footer-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding-bottom: 32px; border-bottom: 1px solid var(--white-06); margin-bottom: 28px;
+}
+.footer-brand { font-size: 18px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.footer-brand span { display: block; font-size: 9px; letter-spacing: .28em; color: var(--gold); font-weight: 500; margin-bottom: 6px; text-transform: uppercase; }
+.footer-info { font-size: 12px; color: var(--white-30); line-height: 2.2; }
+.footer-copy {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  font-size: 11px; color: rgba(245,243,239,.16); flex-wrap: wrap; gap: 8px;
+}
+.footer-notice { line-height: 1.8; text-align: right; }
+
+/* ── REVEAL ─────────────────────────── */
+.rv { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.rv.on { opacity: 1; transform: none; }
+.rv.d1 { transition-delay: .1s; }
+.rv.d2 { transition-delay: .2s; }
+.rv.d3 { transition-delay: .3s; }
+
+/* ── RESPONSIVE ─────────────────────── */
+@media (max-width: 1024px) {
+  .intro-grid { grid-template-columns: 1fr; gap: 52px; }
+  .overview-grid, .overview-row2 { grid-template-columns: 1fr 1fr; }
+  .overview-row2 .ov-item { border-top: 1px solid var(--white-06); }
+  .feat-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav { padding: 0 24px; }
+  .nav-badge { display: none; }
+  .sec { padding: 96px 24px; }
+  .hero-body { padding: 0 24px 18% 24px; }
+  .hero-en { font-size: 42px; }
+  .hero-en-sub { font-size: 22px; }
+  .hero-stats { flex-wrap: wrap; gap: 24px; }
+  .hero-stat { border-right: none; padding-right: 0; margin-right: 0; }
+  .hero-scroll { display: none; }
+  .overview-grid, .overview-row2 { grid-template-columns: 1fr 1fr; }
+  .ov-item { padding: 32px 24px; }
+  .feat-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer { padding: 48px 24px 36px; }
+  .footer-top { flex-direction: column; gap: 20px; }
+  .footer-notice { text-align: left; }
+}
+@media (max-width: 520px) {
+  .overview-grid, .overview-row2 { grid-template-columns: 1fr; }
+  .ov-item { border-right: none; border-top: 1px solid var(--white-06); }
+  .ov-item:first-child { border-top: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────── -->
+<header class="nav" id="nav">
+  <div class="nav-logo">
+    <span class="nav-logo-sub">THE H · 대전 유성</span>
+    <span class="nav-logo-name">디에이치 비아트</span>
+  </div>
+  <a href="#regist" class="nav-badge">관심고객 등록</a>
+</header>
+
+<!-- ── HERO ─────────────────── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-body">
+    <p class="hero-eyebrow">대전 최초 디에이치 · 대전광역시 유성구 장대B구역</p>
+    <div class="hero-main">
+      <span class="hero-en">THE H<br>VIEART</span>
+      <span class="hero-en-sub">디에이치 비아트</span>
+    </div>
+    <p class="hero-ko">삶이 곧 예술이 되는 작품 같은 주거명작 · VIE + ART</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">54<span>층</span></div>
+        <div class="hero-stat-label">최고층수</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">2,744<span>세대</span></div>
+        <div class="hero-stat-label">총 세대수</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">9<span>개동</span></div>
+        <div class="hero-stat-label">규모</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">179.8<span>m</span></div>
+        <div class="hero-stat-label">최고 높이</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">SCROLL</div>
+</section>
+
+<!-- ── INTRO ─────────────────── -->
+<section class="sec intro">
+  <div class="sec-inner">
+    <div class="intro-grid">
+      <div class="intro-copy rv">
+        <div class="kicker">Project Overview</div>
+        <h2 class="sec-h2">대전 최초<br><em>디에이치</em>가<br>도시를 바꿉니다</h2>
+        <p>현대건설의 최고 프리미엄 브랜드 디에이치(THE H)가<br>대전 유성구 장대B구역에 처음으로 들어섭니다.<br><br>지방 최초 디에이치 브랜드 아파트로서,<br>대전의 스카이라인을 새롭게 정의할<br>최고 54층, 2,744세대의 대단지입니다.</p>
+      </div>
+      <div class="intro-cards rv d1">
+        <div class="intro-card">
+          <div class="intro-card-num">01</div>
+          <div class="intro-card-body">
+            <div class="intro-card-title">대전 최초 디에이치</div>
+            <div class="intro-card-sub">현대건설 최상위 프리미엄 브랜드 — 지방 최초 적용</div>
+          </div>
+        </div>
+        <div class="intro-card">
+          <div class="intro-card-num">02</div>
+          <div class="intro-card-body">
+            <div class="intro-card-title">대전 마천루 Top 4</div>
+            <div class="intro-card-sub">최고 54층 · 179.8m · 대전 스카이라인의 새 기준</div>
+          </div>
+        </div>
+        <div class="intro-card">
+          <div class="intro-card-num">03</div>
+          <div class="intro-card-body">
+            <div class="intro-card-title">글로벌 설계 파트너십</div>
+            <div class="intro-card-sub">칼리슨RTKL과 협업 — 골드 웨이브 특화설계</div>
+          </div>
+        </div>
+        <div class="intro-card">
+          <div class="intro-card-num">04</div>
+          <div class="intro-card-body">
+            <div class="intro-card-title">더블역세권</div>
+            <div class="intro-card-sub">구암역 · 유성온천역 인근 — 도시철도 1호선</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OVERVIEW ─────────────── -->
+<section class="overview">
+  <div class="sec-inner">
+    <div class="overview-grid">
+      <div class="ov-item rv">
+        <div class="ov-label">위치</div>
+        <div class="ov-val">유성구 장대동<small>14-5번지 일원</small></div>
+      </div>
+      <div class="ov-item rv d1">
+        <div class="ov-label">규모</div>
+        <div class="ov-val">지하 7층<small>지상 최고 54층, 9개동</small></div>
+      </div>
+      <div class="ov-item rv d2">
+        <div class="ov-label">세대수</div>
+        <div class="ov-val">2,744세대<small>46 – 167㎡</small></div>
+      </div>
+      <div class="ov-item rv d3">
+        <div class="ov-label">시공</div>
+        <div class="ov-val">현대건설<small>THE H 브랜드</small></div>
+      </div>
+    </div>
+    <div class="overview-row2">
+      <div class="ov-item rv">
+        <div class="ov-label">사업방식</div>
+        <div class="ov-val">장대B구역<small>재개발 정비사업</small></div>
+      </div>
+      <div class="ov-item rv d1">
+        <div class="ov-label">공사비</div>
+        <div class="ov-val">약 8,800억<small>원 (예정)</small></div>
+      </div>
+      <div class="ov-item rv d2">
+        <div class="ov-label">설계 협업</div>
+        <div class="ov-val">칼리슨RTKL<small>글로벌 건축 파트너</small></div>
+      </div>
+      <div class="ov-item rv d3">
+        <div class="ov-label">입주 예정</div>
+        <div class="ov-val">2032년<small>(예정, 변경될 수 있음)</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ─────────────── -->
+<section class="sec features" id="features">
+  <div class="sec-inner">
+    <div class="rv">
+      <div class="kicker">Premium Features</div>
+      <h2 class="sec-h2">최고의 삶을<br>디자인하다</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card rv d1">
+        <div class="feat-icon">⬡</div>
+        <div class="feat-title">스카이 커뮤니티</div>
+        <div class="feat-desc">49층에 조성되는 스카이 커뮤니티로 대전의 파노라마 뷰를 일상에서 누릴 수 있습니다.</div>
+      </div>
+      <div class="feat-card rv d2">
+        <div class="feat-icon">◇</div>
+        <div class="feat-title">골드 웨이브 디자인</div>
+        <div class="feat-desc">칼리슨RTKL과의 협업으로 완성된 골드 웨이브 외관 디자인과 대형 하이테크 문주가 적용됩니다.</div>
+      </div>
+      <div class="feat-card rv d3">
+        <div class="feat-icon">◯</div>
+        <div class="feat-title">프리미엄 수영장</div>
+        <div class="feat-desc">야외 인피니티풀, 패밀리풀, 성인풀, 유아풀을 갖춘 가족형 프리미엄 수영장을 제공합니다.</div>
+      </div>
+      <div class="feat-card rv d1">
+        <div class="feat-icon">▷</div>
+        <div class="feat-title">라이프스타일 커뮤니티</div>
+        <div class="feat-desc">런닝트랙, 실내골프연습장, 다이닝 공간, 비즈니스 라운지, 상상도서관 등 입체적인 생활 인프라.</div>
+      </div>
+      <div class="feat-card rv d2">
+        <div class="feat-icon">◎</div>
+        <div class="feat-title">역세권 입지</div>
+        <div class="feat-desc">대전 도시철도 1호선 구암역·유성온천역 인접. 유성IC를 통한 고속도로 접근 및 유성복합터미널 인접.</div>
+      </div>
+      <div class="feat-card rv d3">
+        <div class="feat-icon">△</div>
+        <div class="feat-title">셀케어 & 웰니스</div>
+        <div class="feat-desc">셀스케어센터, 언택트 스터디룸, 게스트하우스까지 — 현대인의 라이프스타일에 맞춘 세심한 설계.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REGISTRATION ─────────── -->
+<section class="sec regist" id="regist">
+  <div class="sec-inner">
+    <div class="regist-inner">
+      <div class="regist-header rv">
+        <div class="kicker" style="justify-content:center">관심고객 등록</div>
+        <h2 class="regist-h2">분양 정보를<br>가장 먼저 받아보세요</h2>
+        <p class="regist-sub">등록하신 고객님께는 분양 일정 확정 시<br>개별 연락을 통해 우선 안내드립니다</p>
+      </div>
+      <form class="form-rows rv d1" data-project="디에이치 비아트">
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+        <div class="form-row">
+          <div class="fg">
+            <label>이름 *</label>
+            <input class="fi" type="text" name="name" placeholder="성함을 입력해 주세요" required>
+          </div>
+          <div class="fg">
+            <label>연락처 *</label>
+            <input class="fi" type="tel" name="phone" placeholder="010-0000-0000" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="fg">
+            <label>관심 평형</label>
+            <select class="fi" name="unit">
+              <option value="">선택해 주세요</option>
+              <option>46㎡ 이하 소형</option>
+              <option>59㎡</option>
+              <option>84㎡</option>
+              <option>100㎡ 이상 대형</option>
+              <option>미정</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>거주 지역</label>
+            <select class="fi" name="region">
+              <option value="">선택해 주세요</option>
+              <option>대전 유성구</option>
+              <option>대전 서구</option>
+              <option>대전 기타</option>
+              <option>세종</option>
+              <option>충청권</option>
+              <option>수도권</option>
+              <option>기타</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="fg">
+            <label>문의사항</label>
+            <textarea class="fi" name="message" placeholder="궁금하신 사항을 자유롭게 작성해 주세요"></textarea>
+          </div>
+        </div>
+        <button class="form-submit" type="submit">관심고객 등록하기</button>
+        <p class="form-status"></p>
+        <p class="form-legal">위 정보는 분양 안내 목적으로만 활용되며, 관련 법령에 따라 보호됩니다.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span>THE H · DAEJEON YUSEONG</span>
+        디에이치 비아트
+      </div>
+      <p class="footer-info">
+        위치 : 대전광역시 유성구 장대동 14-5번지 일원<br>
+        시공 : 현대건설(주) &nbsp;|&nbsp; 브랜드 : THE H (디에이치)<br>
+        광고주 : 와플스튜디오 &nbsp;|&nbsp; 사업자등록번호 : 615-28-01646
+      </p>
+    </div>
+    <div class="footer-copy">
+      <span>COPYRIGHT © 2026. 디에이치 비아트. ALL RIGHTS RESERVED.</span>
+      <span class="footer-notice">
+        ※ 본 홈페이지의 CG 및 이미지는 소비자의 이해를 돕기 위한 것으로 실제와 다를 수 있습니다.<br>
+        ※ 사업 계획은 관계기관 사정에 의해 변경될 수 있습니다.
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var EP = 'https://script.google.com/macros/s/AKfycbzXiCO-C1RmUXb96X-Cx8bluQzdhWhGZDrT5ECLGosPDD4_sX8irZmu4pZ3veovgEOa/exec';
+
+  /* NAV */
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* FORM */
+  var form = document.querySelector('.form-rows');
+  if (form) {
+    var status = form.querySelector('.form-status');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form.querySelector('.hp').value) return;
+      var btn = form.querySelector('.form-submit');
+      btn.disabled = true; btn.textContent = '등록 중...';
+      if (status) status.textContent = '';
+      var fd = new FormData(form);
+      fd.append('project', form.dataset.project || '디에이치 비아트');
+      fd.append('timestamp', new Date().toLocaleString('ko-KR'));
+      fetch(EP, { method: 'POST', mode: 'no-cors', body: fd })
+        .then(function () {
+          form.reset();
+          if (status) status.textContent = '등록이 완료되었습니다. 분양 일정 확정 시 우선 안내드리겠습니다.';
+          btn.disabled = false; btn.textContent = '관심고객 등록하기';
+        })
+        .catch(function () {
+          if (status) status.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+          btn.disabled = false; btn.textContent = '관심고객 등록하기';
+        });
+    });
+  }
+
+  /* REVEAL */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.rv').forEach(function (el) { el.classList.add('on'); });
+  }
+})();
+</script>
+</body>
+</html>
